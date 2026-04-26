@@ -1,0 +1,222 @@
+{
+  "name": "switchboard",
+  "displayName": "Switchboard",
+  "publisher": "mohit-k-s",
+  "version": "1.0.0",
+  "description": "Session router extension for switching agent threads without window reloads",
+  "main": "./dist/extension.js",
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts",
+    "test": "echo \"No tests yet\"",
+    "package": "vsce package",
+    "publish:marketplace": "vsce publish"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Mohit",
+    "url": "https://github.com/mohit-k-s"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mohit-k-s/switchboard.git"
+  },
+  "homepage": "https://github.com/mohit-k-s/switchboard#readme",
+  "bugs": {
+    "url": "https://github.com/mohit-k-s/switchboard/issues"
+  },
+  "license": "ISC",
+  "engines": {
+    "vscode": "^1.116.0"
+  },
+  "activationEvents": [
+    "onStartupFinished",
+    "onView:otf.sessions",
+    "onView:otf.repo",
+    "onCommand:otf.addSession",
+    "onCommand:otf.switchSession",
+    "onCommand:otf.attachRepo",
+    "onCommand:otf.openSessionPanel",
+    "onCommand:otf.focusTerminal",
+    "onCommand:otf.openRepoInWorkspace",
+    "onCommand:otf.openRepoFile",
+    "onCommand:otf.openRepoFileToSide",
+    "onCommand:otf.openRepoDiff",
+    "onCommand:otf.revealRepoItemInFinder",
+    "onCommand:otf.copyRepoRelativePath"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "otf",
+          "title": "Switchboard",
+          "icon": "media/flow.svg"
+        }
+      ]
+    },
+    "views": {
+      "otf": [
+        {
+          "id": "otf.sessions",
+          "name": "Sessions"
+        },
+        {
+          "id": "otf.repo",
+          "name": "Repo"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "otf.addSession",
+        "category": "Switchboard",
+        "title": "Add Session",
+        "shortTitle": "Add"
+      },
+      {
+        "command": "otf.switchSession",
+        "category": "Switchboard",
+        "title": "Switch Session",
+        "shortTitle": "Switch"
+      },
+      {
+        "command": "otf.attachRepo",
+        "category": "Switchboard",
+        "title": "Attach Repo",
+        "shortTitle": "Attach"
+      },
+      {
+        "command": "otf.openSessionPanel",
+        "category": "Switchboard",
+        "title": "Open Session Panel",
+        "shortTitle": "Panel"
+      },
+      {
+        "command": "otf.focusTerminal",
+        "category": "Switchboard",
+        "title": "Focus Session Terminal",
+        "shortTitle": "Terminal"
+      },
+      {
+        "command": "otf.refresh",
+        "category": "Switchboard",
+        "title": "Refresh",
+        "shortTitle": "Refresh"
+      },
+      {
+        "command": "otf.openRepoInWorkspace",
+        "category": "Switchboard",
+        "title": "Open Repo in VS Code",
+        "shortTitle": "Open Repo"
+      },
+      {
+        "command": "otf.openRepoFile",
+        "category": "Switchboard",
+        "title": "Open",
+        "shortTitle": "Open"
+      },
+      {
+        "command": "otf.openRepoFileToSide",
+        "category": "Switchboard",
+        "title": "Open to the Side",
+        "shortTitle": "Open to Side"
+      },
+      {
+        "command": "otf.openRepoDiff",
+        "category": "Switchboard",
+        "title": "Open Git Changes",
+        "shortTitle": "Git Changes"
+      },
+      {
+        "command": "otf.revealRepoItemInFinder",
+        "category": "Switchboard",
+        "title": "Reveal in File Manager",
+        "shortTitle": "Reveal"
+      },
+      {
+        "command": "otf.copyRepoRelativePath",
+        "category": "Switchboard",
+        "title": "Copy Relative Path",
+        "shortTitle": "Copy Path"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "otf.addSession",
+          "when": "view == otf.sessions",
+          "group": "navigation@1"
+        },
+        {
+          "command": "otf.switchSession",
+          "when": "view == otf.sessions",
+          "group": "navigation@2"
+        },
+        {
+          "command": "otf.attachRepo",
+          "when": "view == otf.sessions",
+          "group": "navigation@3"
+        },
+        {
+          "command": "otf.focusTerminal",
+          "when": "view == otf.sessions",
+          "group": "navigation@4"
+        },
+        {
+          "command": "otf.openRepoInWorkspace",
+          "when": "view == otf.sessions",
+          "group": "navigation@5"
+        },
+        {
+          "command": "otf.refresh",
+          "when": "view == otf.sessions || view == otf.repo",
+          "group": "navigation@6"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "otf.attachRepo",
+          "when": "view == otf.sessions",
+          "group": "inline"
+        },
+        {
+          "command": "otf.openRepoFile",
+          "when": "view == otf.repo && viewItem == otfRepoFile",
+          "group": "inline@1"
+        },
+        {
+          "command": "otf.openRepoFileToSide",
+          "when": "view == otf.repo && viewItem == otfRepoFile",
+          "group": "inline@2"
+        },
+        {
+          "command": "otf.openRepoDiff",
+          "when": "view == otf.repo && viewItem == otfRepoFile",
+          "group": "navigation@1"
+        },
+        {
+          "command": "otf.revealRepoItemInFinder",
+          "when": "view == otf.repo && (viewItem == otfRepoFile || viewItem == otfRepoDir)",
+          "group": "navigation@2"
+        },
+        {
+          "command": "otf.copyRepoRelativePath",
+          "when": "view == otf.repo && (viewItem == otfRepoFile || viewItem == otfRepoDir)",
+          "group": "navigation@3"
+        }
+      ]
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "@types/vscode": "^1.116.0",
+    "@typescript-eslint/eslint-plugin": "^8.59.0",
+    "@typescript-eslint/parser": "^8.59.0",
+    "@vscode/vsce": "^3.9.1",
+    "eslint": "^10.2.1",
+    "typescript": "^6.0.3"
+  }
+}

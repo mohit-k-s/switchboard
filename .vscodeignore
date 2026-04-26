@@ -1,0 +1,9 @@
+**/.vscode/**
+**/.git/**
+**/.DS_Store
+src/**
+tsconfig.json
+eslint.config.js
+sample.png
+ex2.png
+bad-bad.png
