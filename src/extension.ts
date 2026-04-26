@@ -342,7 +342,7 @@ export function activate(context: vscode.ExtensionContext): void {
     vscode.commands.registerCommand("otf.addSession", async () => {
       const name = await vscode.window.showInputBox({
         prompt: "Session name",
-        placeHolder: "playlist_view_jobs",
+        placeHolder: "some_project",
         ignoreFocusOut: true,
       });
       if (!name) {
