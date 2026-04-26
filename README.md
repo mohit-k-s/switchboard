@@ -2,6 +2,8 @@
 
 Switchboard is a lightweight VS Code extension that helps you switch between agent sessions/threads without reloading the window.
 
+![Switchboard demo](./demo.png)
+
 ## What it does
 
 - Session/thread switcher in a dedicated activity bar view
