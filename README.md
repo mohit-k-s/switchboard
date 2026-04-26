@@ -22,53 +22,16 @@ Run in VS Code:
 2. Press `F5` to launch an Extension Development Host
 3. Open the **Switchboard** activity icon
 
-## Install locally as VSIX
+## Install from GitHub Releases (VSIX)
 
-```bash
-npm run package
-```
+1. Go to the repository **Releases** page.
+2. Download the latest `switchboard-*.vsix` asset.
+3. In VS Code, open Extensions view.
+4. Click the `...` menu in the top-right of Extensions.
+5. Select **Install from VSIX...** and choose the downloaded file.
 
-This creates a `.vsix` file in the project root.
-
-Install it:
-
-```bash
-code --install-extension switchboard-1.0.0.vsix
-```
-
-You can uninstall later with:
+You can uninstall later from the Extensions view (search for `Switchboard`), or via:
 
 ```bash
 code --uninstall-extension mohit-local.switchboard
 ```
-
-## Publish to VS Code Marketplace
-
-Before publishing, update these fields in `package.json`:
-
-- `publisher`
-- `repository.url`
-- `homepage`
-- `bugs.url`
-
-Then:
-
-1. Create a publisher in VS Code Marketplace (Azure DevOps)
-2. Create a Personal Access Token (PAT) with marketplace publish permissions
-3. Login once:
-
-```bash
-npx vsce login <publisher-name>
-```
-
-4. Publish:
-
-```bash
-npm run publish:marketplace
-```
-
-## Recommended next improvements
-
-- Add unread/activity counters in session list
-- Persist repo tree expansion state per session
-- Wire terminal handoff to your real agent CLI switch command
