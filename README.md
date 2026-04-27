@@ -35,5 +35,5 @@ Run in VS Code:
 You can uninstall later from the Extensions view (search for `Switchboard`), or via:
 
 ```bash
-code --uninstall-extension mohit-local.switchboard
+code --uninstall-extension mohit-k-s.switchboard
 ```
