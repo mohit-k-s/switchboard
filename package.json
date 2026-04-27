@@ -37,6 +37,7 @@
     "onView:otf.repo",
     "onCommand:otf.addSession",
     "onCommand:otf.switchSession",
+    "onCommand:otf.removeSession",
     "onCommand:otf.attachRepo",
     "onCommand:otf.openSessionPanel",
     "onCommand:otf.focusTerminal",
@@ -81,6 +82,12 @@
         "category": "Switchboard",
         "title": "Switch Session",
         "shortTitle": "Switch"
+      },
+      {
+        "command": "otf.removeSession",
+        "category": "Switchboard",
+        "title": "Remove Session",
+        "shortTitle": "Remove"
       },
       {
         "command": "otf.attachRepo",
@@ -156,24 +163,29 @@
           "group": "navigation@2"
         },
         {
-          "command": "otf.attachRepo",
+          "command": "otf.removeSession",
           "when": "view == otf.sessions",
           "group": "navigation@3"
         },
         {
-          "command": "otf.focusTerminal",
+          "command": "otf.attachRepo",
           "when": "view == otf.sessions",
           "group": "navigation@4"
         },
         {
-          "command": "otf.openRepoInWorkspace",
+          "command": "otf.focusTerminal",
           "when": "view == otf.sessions",
           "group": "navigation@5"
         },
         {
+          "command": "otf.openRepoInWorkspace",
+          "when": "view == otf.sessions",
+          "group": "navigation@6"
+        },
+        {
           "command": "otf.refresh",
           "when": "view == otf.sessions || view == otf.repo",
-          "group": "navigation@6"
+          "group": "navigation@7"
         }
       ],
       "view/item/context": [
@@ -181,6 +193,11 @@
           "command": "otf.attachRepo",
           "when": "view == otf.sessions",
           "group": "inline"
+        },
+        {
+          "command": "otf.removeSession",
+          "when": "view == otf.sessions",
+          "group": "navigation@2"
         },
         {
           "command": "otf.openRepoFile",

@@ -332,6 +332,16 @@ export function activate(context: vscode.ExtensionContext): void {
     return undefined;
   };
 
+  const resolveSessionId = (arg?: unknown): string | undefined => {
+    if (typeof arg === "string") {
+      return arg;
+    }
+    if (arg instanceof SessionItem) {
+      return arg.session.id;
+    }
+    return undefined;
+  };
+
   context.subscriptions.push(
     vscode.commands.registerCommand("otf.refresh", () => refreshAll()),
     vscode.commands.registerCommand("otf.openSessionPanel", () => {
@@ -373,7 +383,7 @@ export function activate(context: vscode.ExtensionContext): void {
       refreshAll();
     }),
     vscode.commands.registerCommand("otf.switchSession", async (arg?: string) => {
-      let sessionId = arg;
+      let sessionId = resolveSessionId(arg);
       const sessions = store.getSessions();
       if (!sessions.length) {
         vscode.window.showInformationMessage("No sessions yet. Run 'Switchboard: Add Session' first.");
@@ -405,6 +415,53 @@ export function activate(context: vscode.ExtensionContext): void {
       store.setActiveSessionId(sessionId);
       refreshAll();
       await vscode.commands.executeCommand("otf.focusTerminal");
+    }),
+    vscode.commands.registerCommand("otf.removeSession", async (arg?: unknown) => {
+      const sessions = store.getSessions();
+      if (!sessions.length) {
+        vscode.window.showInformationMessage("No sessions to remove.");
+        return;
+      }
+
+      let sessionId = resolveSessionId(arg);
+      if (!sessionId) {
+        const pick = await vscode.window.showQuickPick(
+          sessions.map((session) => ({
+            label: session.name,
+            description: session.workspacePath ?? "No repo attached",
+            sessionId: session.id,
+          })),
+          { placeHolder: "Select a session to remove" },
+        );
+        if (!pick) {
+          return;
+        }
+        sessionId = pick.sessionId;
+      }
+
+      const target = sessions.find((session) => session.id === sessionId);
+      if (!target) {
+        return;
+      }
+
+      const confirmed = await vscode.window.showWarningMessage(
+        `Remove session "${target.name}"?`,
+        { modal: true },
+        "Remove",
+      );
+      if (confirmed !== "Remove") {
+        return;
+      }
+
+      const remaining = sessions.filter((session) => session.id !== target.id);
+      store.saveSessions(remaining);
+
+      const activeSessionId = store.getActiveSessionId();
+      if (activeSessionId === target.id) {
+        store.setActiveSessionId(remaining[0]?.id);
+      }
+
+      refreshAll();
     }),
     vscode.commands.registerCommand("otf.attachRepo", async () => {
       const activeId = store.getActiveSessionId();
